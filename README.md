@@ -24,14 +24,14 @@
 
 - Создаём миграцию.
 ```bash
-  dotnet ef migrations add newmigration --project Abdul.ToDo.csproj
+dotnet ef migrations add newmigration --project Abdul.ToDo.csproj
 ```
 
 ### В третьих:
 
 - Запуск:
 ```bash
-    dotnet run
+dotnet run
  ```
  Видим ссылку http://localhost:5071 - Копируем
 
@@ -42,10 +42,10 @@
 #### Вариант запуска через httprepl:
 - Устанавка
 ```bash
-     dotnet tool install -g Microsoft.dotnet-httprepl
+dotnet tool install -g Microsoft.dotnet-httprepl
  ```
  - Запуск
 ```bash
-     httprepl  http://localhost:5071
+httprepl  http://localhost:5071
  ```
  После запуска мы можем вводить запросы (get, post...) в терминал.
