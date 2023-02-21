@@ -7,6 +7,8 @@ builder.Services.AddDbContext<TodoDb>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment()){
@@ -49,16 +51,3 @@ app.MapDelete("todos/{id}", async (int id, TodoDb db) => {
 app.UseHttpsRedirection();
 
 app.Run();
-
-public class TodoDb : DbContext
-{
-    public TodoDb(DbContextOptions<TodoDb> options): base(options) {}
-    public DbSet<Todo> todoItems => Set<Todo>();
-}
-
-public record Todo 
-{
-    public int Id { get; set; } = default!;
-    public string? Name { get; set; } = default!;
-    public bool IsComplete { get; set; } = default!;
-}
