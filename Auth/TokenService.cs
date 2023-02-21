@@ -1,7 +1,7 @@
 public class TokenService : ITokenService
 {
     private TimeSpan ExpiryDuration = new TimeSpan(0, 30, 0);
-    public string BuildToken(string key, string issuer, UserDto user)
+    public string BuildToken(string? key, string? issuer, UserDto user)
     {
         var claims = new[]{
             new Claim(ClaimTypes.Name, user.Login),
