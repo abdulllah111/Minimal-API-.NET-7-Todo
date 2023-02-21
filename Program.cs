@@ -1,28 +1,64 @@
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDbContext<TodoDb>(options => {
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
 var app = builder.Build();
 
-var todoItems = new List<Todo>();
+if (app.Environment.IsDevelopment()){
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<TodoDb>();
+    db.Database.EnsureCreated();
+}
 
-app.MapGet("/todos", () => todoItems);
-app.MapGet("/todos/{id}", (int id) => todoItems.FirstOrDefault(h => h.Id == id));
-app.MapPost("todos", (Todo todo) => todoItems.Add(todo));
-app.MapPut("/todos", (Todo todo) => {
-    var index = todoItems.FindIndex(h => h.Id == todo.Id);
-    if(index < 0) throw new Exception("Not found ");
-    todoItems[index] = todo;
+app.MapGet("/todos",async (TodoDb db) => await db.todoItems.ToListAsync());
+
+app.MapGet("/todos/{id}", async (int id, TodoDb db) => 
+    await db.todoItems.FirstOrDefaultAsync(h => h.Id == id) is Todo todo
+    ? Results.Ok(todo)
+    : Results.NotFound());
+
+app.MapPost("todos", async ([FromBody] Todo todo, TodoDb db) => 
+    {
+        db.todoItems.Add(todo);
+        await db.SaveChangesAsync();
+        return Results.Created($"/hotels/{todo.Id}", todo);
+    });
+
+app.MapPut("/todos", async ([FromBody] Todo todo, TodoDb db) => {
+    var todoFromDb = await db.todoItems.FindAsync(new object[] {todo.Id});
+    if (todoFromDb == null) return Results.NotFound();
+    todoFromDb.Name = todo.Name;
+    todoFromDb.IsComplete = todo.IsComplete;
+    await db.SaveChangesAsync();
+    return Results.NoContent();
 });
-app.MapDelete("hotels/{id}", (int id) => {
-    var index = todoItems.FindIndex(h => h.Id == id);
-    if (index < 0) throw new Exception("Not found");
-    todoItems.RemoveAt(index);
+
+app.MapDelete("todos/{id}", async (int id, TodoDb db) => {
+    var todoFromDb = await db.todoItems.FindAsync(new object[] {id});
+    if (todoFromDb == null) return Results.NotFound();
+    db.todoItems.Remove(todoFromDb);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
 });
+
+app.UseHttpsRedirection();
 
 app.Run();
 
-
-public class Todo 
+public class TodoDb : DbContext
 {
-    public int Id { get; set; }
-    public string? Name { get; set; } = string.Empty;
-    public bool IsComplete { get; set; }
+    public TodoDb(DbContextOptions<TodoDb> options): base(options) {}
+    public DbSet<Todo> todoItems => Set<Todo>();
+}
+
+public record Todo 
+{
+    public int Id { get; set; } = default!;
+    public string? Name { get; set; } = default!;
+    public bool IsComplete { get; set; } = default!;
 }

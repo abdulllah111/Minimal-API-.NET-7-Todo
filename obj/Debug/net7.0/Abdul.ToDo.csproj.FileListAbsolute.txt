@@ -24,3 +24,15 @@ D:\projects\C#\Abdul.ToDo\obj\Debug\net7.0\refint\Abdul.ToDo.dll
 D:\projects\C#\Abdul.ToDo\obj\Debug\net7.0\Abdul.ToDo.pdb
 D:\projects\C#\Abdul.ToDo\obj\Debug\net7.0\Abdul.ToDo.genruntimeconfig.cache
 D:\projects\C#\Abdul.ToDo\obj\Debug\net7.0\ref\Abdul.ToDo.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Npgsql.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\projects\C#\Abdul.ToDo\obj\Debug\net7.0\Abdul.ToDo.csproj.CopyComplete
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Humanizer.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Mono.TextTemplating.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\System.CodeDom.dll
