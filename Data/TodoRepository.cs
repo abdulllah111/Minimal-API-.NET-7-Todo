@@ -6,6 +6,11 @@ public class TodoRepository : ITodoRepository
     }
     public Task<List<Todo>> GetTodosAsync() => _context.todoItems.ToListAsync();
 
+    public Task<List<Todo>> GetTodosAsync(string name) =>
+        _context.todoItems.Where(h => h.Name.Contains(name)).ToListAsync();
+
+    public Task<List<Todo>> GetTodosAsync(bool iscomplete) =>
+        _context.todoItems.Where(h => h.IsComplete == iscomplete).ToListAsync();
     public async Task<Todo?> GetTodoAsync(int todoId) => await _context.todoItems.FindAsync(new object[]{todoId});
 
     public async Task InsertTodoAsync(Todo todo) => await _context.todoItems.AddAsync(todo);

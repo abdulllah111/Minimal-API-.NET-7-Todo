@@ -36,3 +36,8 @@ D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.
 D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
 D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Mono.TextTemplating.dll
 D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\System.CodeDom.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Microsoft.OpenApi.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\projects\C#\Abdul.ToDo\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\projects\C#\Abdul.ToDo\obj\Debug\net7.0\Abdul.ToDo.MvcApplicationPartsAssemblyInfo.cs
