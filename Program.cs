@@ -17,34 +17,30 @@ if (app.Environment.IsDevelopment()){
     db.Database.EnsureCreated();
 }
 
-app.MapGet("/todos",async (TodoDb db) => await db.todoItems.ToListAsync());
+app.MapGet("/todos",async (ITodoRepository repository) => 
+    Results.Ok(await repository.GetTodosAsync()));
 
-app.MapGet("/todos/{id}", async (int id, TodoDb db) => 
-    await db.todoItems.FirstOrDefaultAsync(h => h.Id == id) is Todo todo
+app.MapGet("/todos/{id}", async (int id, ITodoRepository repository) => 
+    await repository.GetTodoAsync(id) is Todo todo
     ? Results.Ok(todo)
     : Results.NotFound());
 
-app.MapPost("todos", async ([FromBody] Todo todo, TodoDb db) => 
+app.MapPost("todos", async ([FromBody] Todo todo, ITodoRepository repository) => 
     {
-        db.todoItems.Add(todo);
-        await db.SaveChangesAsync();
+        await repository.InsertTodoAsync(todo);
+        await repository.SaveAsync();
         return Results.Created($"/hotels/{todo.Id}", todo);
     });
 
-app.MapPut("/todos", async ([FromBody] Todo todo, TodoDb db) => {
-    var todoFromDb = await db.todoItems.FindAsync(new object[] {todo.Id});
-    if (todoFromDb == null) return Results.NotFound();
-    todoFromDb.Name = todo.Name;
-    todoFromDb.IsComplete = todo.IsComplete;
-    await db.SaveChangesAsync();
+app.MapPut("/todos", async ([FromBody] Todo todo, ITodoRepository repository) => {
+    await repository.UpdateTodoAsync(todo);
+    await repository.SaveAsync();
     return Results.NoContent();
 });
 
-app.MapDelete("todos/{id}", async (int id, TodoDb db) => {
-    var todoFromDb = await db.todoItems.FindAsync(new object[] {id});
-    if (todoFromDb == null) return Results.NotFound();
-    db.todoItems.Remove(todoFromDb);
-    await db.SaveChangesAsync();
+app.MapDelete("todos/{id}", async (int id, ITodoRepository repository) => {
+    await repository.DeleteTodoAsync(id);
+    await repository.SaveAsync();
     return Results.NoContent();
 });
 
